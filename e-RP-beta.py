@@ -33,7 +33,7 @@ def login():
             body = f"Your token is: {st.session_state.token}"
             mailto_link = f"mailto:{email_input}?subject={subject}&body={body}"
             st.markdown(f"[Click here to send your token]({mailto_link})")
-            st.success("Token has been sent to your email. Please check your inbox.")
+            st.success("Token has been generated. Please check your email to send the token.")
         else:
             st.error("Unauthorized email address. Please use an allowed email.")
 
