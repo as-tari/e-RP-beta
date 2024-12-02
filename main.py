@@ -1,5 +1,9 @@
 import streamlit as st
 
+st.set_page_config(
+    page_title="Login | e-RP Assistant System",
+)
+
 # Inisialisasi session state untuk role
 if "role" not in st.session_state:
     st.session_state.role = None
