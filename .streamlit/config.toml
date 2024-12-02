@@ -3,3 +3,9 @@ primaryColor="#5c6bc0"
 backgroundColor="#cadbf5"
 secondaryBackgroundColor="#ffffff"
 textColor="#000000"
+
+[server]
+headless = true
+port = 8501
+enableCORS = false
+maxUploadSize = 2000
