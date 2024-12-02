@@ -1,47 +1,82 @@
 import streamlit as st
-from utils.auth import check_role
-from admin.dashboard import show_dashboard as admin_dashboard
-from team.coordinator import show_dashboard as coordinator_dashboard
-from team.navy import show_dashboard as navy_dashboard
-from team.niki import show_dashboard as niki_dashboard
-from team.eta import show_dashboard as eta_dashboard
-from team.tari import show_dashboard as tari_dashboard
-from lecturer.dashboard import show_dashboard as lecturer_dashboard
-from student.dashboard import show_dashboard as student_dashboard
 
-# Inisialisasi session state
+# Inisialisasi session state untuk role
 if "role" not in st.session_state:
     st.session_state.role = None
 
-# Fungsi untuk menampilkan dashboard berdasarkan role
-def display_dashboard():
-    if st.session_state.role == "Admin":
-        admin_dashboard()
-    elif st.session_state.role == "Team":
-        team_role = st.selectbox(["Coordinator", "Eta", "Navy", "Niki", "Tari"])
-        if team_role == "Coordinator":
-            coordinator_dashboard()
-        elif team_role == "Navy":
-            navy_dashboard()
-        elif team_role == "Niki":
-            niki_dashboard()
-        elif team_role == "Eta":
-            eta_dashboard()
-        elif team_role == "Tari":
-            tari_dashboard()
-    elif st.session_state.role == "Lecturer":
-        lecturer_dashboard()
-    elif st.session_state.role == "Student":
-        student_dashboard()
+# Daftar peran yang tersedia
+ROLES = ["Admin", "Team", "Lecturer", "Student"]
+TEAM_ROLES = ["Coordinator", "Eta", "Navy", "Niki", "Tari"]
+
+def login():
+    st.header("Log in")
+    role = st.selectbox("Choose your role", ROLES)
+
+    if role == "Team":
+        team_role = st.selectbox("Choose your team role", TEAM_ROLES)
+        if st.button("Log in"):
+            st.session_state.role = (role, team_role)
+            st.rerun()  # Menggunakan rerun untuk memperbarui tampilan
     else:
-        st.warning("Please log in to access your dashboard.")
+        if st.button("Log in"):
+            st.session_state.role = (role, None)
+            st.rerun()  # Menggunakan rerun untuk memperbarui tampilan
 
-# Login dan pemilihan role
-st.image("images/3.png")
+def logout():
+    st.session_state.role = None
+    st.rerun()  # Menggunakan rerun untuk memperbarui tampilan
+
+# Menampilkan judul aplikasi
 st.title("📑 e-RP Assistant System")
-st.logo("static/images/6.png", icon_image="static/images/3.png")
-st.markdown("<h2 style='font-family: 'Courier New'; color: blue;'>Welcome!</h2>", unsafe_allow_html=True)
-role_input = st.selectbox("Continue log in as", ["Admin", "Team", "Lecturer", "Student"])
-st.session_state.role = role_input
 
-display_dashboard()
+# Menampilkan logo aplikasi
+st.logo("static/images/6.png", icon_image="static/images/3.png")
+
+# Menampilkan halaman login jika belum login
+if st.session_state.role is None:
+    login()
+else:
+    # Menampilkan gambar dan judul aplikasi
+    st.image("static/images/4.png")  # Menampilkan logo tambahan
+
+    # Menentukan halaman berdasarkan peran
+    logout_page = st.Page(logout, title="Log out", icon=":material/logout:")
+    settings = st.Page("admin/settings.py", title="Settings", icon=":material/settings:")
+    
+    # Halaman untuk Admin
+    if st.session_state.role[0] == "Admin":
+        admin_dashboard = st.Page("admin/dashboard.py", title="Admin Dashboard", icon=":material/person_add:")
+        manage_users = st.Page("admin/manage_users.py", title="Manage Users", icon=":material/security:")
+    
+    # Halaman untuk Team
+    if st.session_state.role[0] == "Team":
+        team_dashboard = st.Page(f"team/{st.session_state.role[1].lower()}.py", title=f"{st.session_state.role[1]} Dashboard", icon=":material/group:")
+    
+    # Halaman untuk Lecturer
+    if st.session_state.role[0] == "Lecturer":
+        lecturer_dashboard = st.Page("lecturer/dashboard.py", title="Lecturer Dashboard", icon=":material/teacher:")
+    
+    # Halaman untuk Student
+    if st.session_state.role[0] == "Student":
+        student_dashboard = st.Page("student/dashboard.py", title="Student Dashboard", icon=":material/student:")
+
+    # Menyusun halaman berdasarkan peran
+    account_pages = [logout_page, settings]
+    page_dict = {}
+
+    if st.session_state.role[0] == "Admin":
+        page_dict["Admin"] = [admin_dashboard, manage_users]
+    if st.session_state.role[0] == "Team":
+        page_dict["Team"] = [team_dashboard]
+    if st.session_state.role[0] == "Lecturer":
+        page_dict["Lecturer"] = [lecturer_dashboard]
+    if st.session_state.role[0] == "Student":
+        page_dict["Student"] = [student_dashboard]
+
+    # Menampilkan navigasi
+    if len(page_dict) > 0:
+        pg = st.navigation({"Account": account_pages} | page_dict)
+    else:
+        pg = st.navigation([st.Page(login)])
+
+    pg.run()
