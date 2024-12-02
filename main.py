@@ -31,12 +31,12 @@ def logout():
 
         
 # Menampilkan logo aplikasi
-st.sidebar.image("static/images/logo.png")
 st.logo("static/images/logo1.png", icon_image="static/images/logo1.png")
 
 # Menampilkan halaman login jika belum login
 if st.session_state.role is None:
     login()
+    st.sidebar.image("static/images/logo.png")
 else:
     # Menentukan halaman berdasarkan peran
     logout_page = st.Page(logout, title="Log out", icon=":material/logout:")
