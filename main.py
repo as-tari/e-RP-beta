@@ -31,7 +31,7 @@ def logout():
     st.rerun()  # Menggunakan rerun untuk memperbarui tampilan
 
 # Menampilkan logo aplikasi
-image = Image.open('logo.png')
+image = Image.open('static/images/logo.png')
 st.image(image,caption=None,output_format="PNG")
 st.logo("static/images/logo1.png", icon_image="static/images/logo1.png")
 
