@@ -28,7 +28,7 @@ def logout():
 
         
 # Menampilkan logo aplikasi
-st.image("static/images/3.png")
+st.image("static/images/logo.png")
 st.logo("static/images/logo.png", icon_image="static/images/logo2.png")
 
 # Menampilkan halaman login jika belum login
