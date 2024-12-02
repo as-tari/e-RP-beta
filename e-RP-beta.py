@@ -45,7 +45,6 @@ def login():
                 st.success("Logged in successfully!")
                 st.session_state.logged_in = True
                 st.session_state.token = None  # Reset token setelah login
-                st.experimental_rerun()  # Refresh halaman
             else:
                 st.error("Invalid token.")
 
