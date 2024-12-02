@@ -1,7 +1,4 @@
 import streamlit as st
-st.set_page_config(
-    layout="wide"
-)
 
 # Inisialisasi session state untuk role
 if "role" not in st.session_state:
@@ -30,7 +27,7 @@ def logout():
     st.rerun()  # Menggunakan rerun untuk memperbarui tampilan
 
 # Menampilkan logo aplikasi
-st.image("static/images/logo.png", width=100)
+st.image("static/images/logo.png", width=50)
 st.logo("static/images/logo1.png", icon_image="static/images/logo1.png")
 
 # Menampilkan halaman login jika belum login
