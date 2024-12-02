@@ -27,8 +27,8 @@ def logout():
     st.rerun()  # Menggunakan rerun untuk memperbarui tampilan
 
 # Menampilkan judul aplikasi
-st.title("📑 e-RP Assistant System")
-
+st.image("static/images/6.png")
+        
 # Menampilkan logo aplikasi
 st.logo("static/images/6.png", icon_image="static/images/3.png")
 
