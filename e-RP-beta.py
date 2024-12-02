@@ -23,6 +23,8 @@ if "token" not in st.session_state:
 ROLES = [None, "Requester", "Responder", "Admin"]
 
 def login():
+    st.title("📑 e-RP Assistant System (Beta)")
+    st.logo("images/6.png", icon_image="logo.png")
     st.header("Log in")
     email_input = st.text_input("Enter your email to log in")
 
