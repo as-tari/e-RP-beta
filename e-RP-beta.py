@@ -28,17 +28,18 @@ def login():
     if st.button("Request Token"):
         if email_input in allowed_emails:
             # Generate token
-            st.session_state.token = generate_token()
+            token = generate_token()  # Simpan token di variabel lokal
             subject = "Your Authentication Token"
-            body = f"Your token is: {st.session_state.token}"
+            body = f"Your token is: {token}"
             mailto_link = f"mailto:{email_input}?subject={subject}&body={body}"
             st.markdown(f"[Click here to send your token]({mailto_link})")
             st.success("Token has been generated. Please check your email to send the token.")
+            st.session_state.token = token  # Simpan token di session state untuk validasi
         else:
             st.error("Unauthorized email address. Please use an allowed email.")
 
     # Input token
-    if st.session_state.token:
+    if st.session_state.token is not None:  # Hanya tampilkan input token jika token ada
         token_input = st.text_input("Enter your token")
 
         if st.button("Log in"):
