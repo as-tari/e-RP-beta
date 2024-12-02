@@ -28,10 +28,10 @@ def logout():
 
         
 # Menampilkan logo aplikasi
-with open("static/images/logo2.png") as logo_file:
-    logo = logo_file.read()
-st.image(logo, width=200)
 st.logo("static/images/logo1.png", icon_image="static/images/logo1.png")
+    with open("static/images/logo2.png") as logo_file:
+        logo = logo_file.read()
+    st.image(logo, width=200)
 
 # Menampilkan halaman login jika belum login
 if st.session_state.role is None:
