@@ -1,9 +1,12 @@
 import streamlit as st
 import random
 import string
+import os
+from dotenv import load_dotenv
 
-# Daftar alamat email yang diizinkan
-ALLOWED_EMAILS = ["astari915@gmail.com", "rp.fpuaj@gmail.com"]
+# Muat variabel lingkungan dari file .env
+load_dotenv()
+ALLOWED_EMAILS = os.getenv("ALLOWED_EMAILS").split(",")
 
 # Fungsi untuk menghasilkan token acak
 def generate_token(length=6):
@@ -33,7 +36,7 @@ def login():
         else:
             st.error("Unauthorized email address. Please enter a valid authorized email address.")
 
-    # Input token
+    # Input token hanya muncul setelah token dihasilkan
     if st.session_state.token:
         token_input = st.text_input("Enter your token")
 
