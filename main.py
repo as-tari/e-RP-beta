@@ -1,7 +1,7 @@
 import streamlit as st
 
 st.set_page_config(
-    page_title="Login | e-RP Assistant System",
+    page_title="Log in | e-RP Assistant System",
 )
 
 # Inisialisasi session state untuk role
@@ -31,7 +31,8 @@ def logout():
     st.rerun()  # Menggunakan rerun untuk memperbarui tampilan
 
 # Menampilkan logo aplikasi
-st.image("static/images/logo.png", width=50)
+image = Image.open('logo.png')
+st.image(image,caption=None,output_format="PNG")
 st.logo("static/images/logo1.png", icon_image="static/images/logo1.png")
 
 # Menampilkan halaman login jika belum login
