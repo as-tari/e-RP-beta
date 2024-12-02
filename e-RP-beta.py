@@ -3,6 +3,7 @@ import random
 import string
 import os
 from dotenv import load_dotenv
+from urllib.parse import quote
 
 # Memuat variabel lingkungan dari file .env
 load_dotenv()
@@ -31,7 +32,8 @@ def login():
             token = generate_token()  # Simpan token di variabel lokal
             subject = "Your Authentication Token"
             body = f"Your token is: {token}"
-            mailto_link = f"mailto:{email_input}?subject={subject}&body={body}"
+            # Encode subject and body
+            mailto_link = f"mailto:{email_input}?subject={quote(subject)}&body={quote(body)}"
             st.markdown(f"[Click here to send your token]({mailto_link})")
             st.success("Token has been generated. Please check your email to send the token.")
             st.session_state.token = token  # Simpan token di session state untuk validasi
