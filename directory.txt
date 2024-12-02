@@ -1,0 +1,35 @@
+e-RP-beta/
+├── .streamlit/             
+│   └── config.toml         
+├── admin/                  
+│   ├── dashboard.py        
+│   ├── manage_users.py     
+│   └── settings.py         
+├── coordinator/            
+│   └── dashboard.py        
+├── team/                   
+│   ├── coordinator.py
+│   ├── navy.py             
+│   ├── niki.py             
+│   ├── eta.py              
+│   └── tari.py             
+├── lecturer/               
+│   └── dashboard.py        
+├── student/                
+│   └── dashboard.py        
+├── static/                 
+│   ├── images/             
+│   │   ├── 3.png
+│   │   ├── 4.png
+│   │   └── 6.png
+│   └── css/                
+│       └── styles.css
+├── utils/                  
+│   ├── auth.py             
+│   ├── db.py               
+│   └── helpers.py          
+├── config.py               
+├── main.py                 
+├── requirements.txt        
+├── .gitignore              
+└── .env                    
