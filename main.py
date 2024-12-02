@@ -1,7 +1,7 @@
 import streamlit as st
 from utils.auth import check_role
 from admin.dashboard import show_dashboard as admin_dashboard
-from team.coordinator import show_dashboard as team_coordinator_dashboard
+from team.coordinator import show_dashboard as coordinator_dashboard
 from team.navy import show_dashboard as navy_dashboard
 from team.niki import show_dashboard as niki_dashboard
 from team.eta import show_dashboard as eta_dashboard
@@ -20,7 +20,7 @@ def display_dashboard():
     elif st.session_state.role == "Team":
         team_role = st.selectbox("Select your team role", ["Coordinator", "Navy", "Niki", "Eta", "Tari"])
         if team_role == "Coordinator":
-            team_coordinator_dashboard()
+            coordinator_dashboard()
         elif team_role == "Navy":
             navy_dashboard()
         elif team_role == "Niki":
