@@ -1,6 +1,4 @@
 import streamlit as st
-import base64
-import cv2
 
 # Inisialisasi session state untuk role
 if "role" not in st.session_state:
@@ -33,6 +31,8 @@ def logout():
 st.logo("static/images/logo1.png", icon_image="static/images/logo1.png")
 
 # Menampilkan logo di main page
+import base64
+import cv2
 def render_img_html(image_b64):
     st.markdown(f"<img style='max-width: 100%;max-height: 100%;' src='data:image/png;base64, {image_b64}'/>", unsafe_allow_html=True)
 
