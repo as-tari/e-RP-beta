@@ -18,7 +18,7 @@ def display_dashboard():
     if st.session_state.role == "Admin":
         admin_dashboard()
     elif st.session_state.role == "Team":
-        team_role = st.selectbox("Select your team role", ["Coordinator", "Navy", "Niki", "Eta", "Tari"])
+        team_role = st.selectbox("Select your team role", ["Coordinator", "Eta", "Navy", "Niki", "Tari"])
         if team_role == "Coordinator":
             coordinator_dashboard()
         elif team_role == "Navy":
