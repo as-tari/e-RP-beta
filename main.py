@@ -18,7 +18,7 @@ def display_dashboard():
     if st.session_state.role == "Admin":
         admin_dashboard()
     elif st.session_state.role == "Team":
-        team_role = st.selectbox("Select your team role", ["Coordinator", "Eta", "Navy", "Niki", "Tari"])
+        team_role = st.selectbox(["Coordinator", "Eta", "Navy", "Niki", "Tari"])
         if team_role == "Coordinator":
             coordinator_dashboard()
         elif team_role == "Navy":
@@ -37,7 +37,9 @@ def display_dashboard():
         st.warning("Please log in to access your dashboard.")
 
 # Login dan pemilihan role
+st.image("images/3.png")
 st.title("📑 e-RP Assistant System")
+st.logo("static/images/6.png", icon_image="static/images/3.png")
 st.markdown("<h2 style='font-family: 'Courier New'; color: blue;'>Welcome!</h2>", unsafe_allow_html=True)
 role_input = st.selectbox("Continue log in as", ["Admin", "Team", "Lecturer", "Student"])
 st.session_state.role = role_input
