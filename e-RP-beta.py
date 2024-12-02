@@ -1,76 +1,53 @@
 import streamlit as st
 import random
 import string
-import os
-from dotenv import load_dotenv
-import smtplib
-from email.mime.text import MIMEText
 
-# Load environment variables from .env file
-load_dotenv()
-allowed_emails = os.getenv("ALLOWED_EMAILS").split(",")
-email_username = os.getenv("EMAIL_USERNAME")
-email_password = os.getenv("EMAIL_PASSWORD")
+# Daftar alamat email yang diizinkan
+ALLOWED_EMAILS = ["astari915@gmail.com", "rp.fpuaj@gmail.com"]
 
-# Function to generate a random token
+# Fungsi untuk menghasilkan token acak
 def generate_token(length=6):
     return ''.join(random.choices(string.ascii_letters + string.digits, k=length))
 
-# Initialize session state
+# Inisialisasi session state
 if "logged_in" not in st.session_state:
     st.session_state.logged_in = False
 if "token" not in st.session_state:
     st.session_state.token = None
-if "email_sent" not in st.session_state:
-    st.session_state.email_sent = False
 
-# Main login function
+# Fungsi utama untuk login
 def login():
     st.header("Log in")
 
-    # Input email
-    email_input = st.text_input("Enter your email")
+    # Input alamat email
+    email_input = st.text_input("Enter your email to log in")
 
     if st.button("Request Token"):
-        if email_input in allowed_emails:
+        if email_input in ALLOWED_EMAILS:
             # Generate token
-            token = generate_token()
+            st.session_state.token = generate_token()
             subject = "Your Authentication Token"
-            body = f"Your token is: {token}"
-
-            # Send email using SMTP
-            msg = MIMEText(body)
-            msg["Subject"] = subject
-            msg["From"] = email_username
-            msg["To"] = email_input
-
-            server = smtplib.SMTP("smtp.gmail.com", 587)
-            server.starttls()
-            server.login(email_username, email_password)
-            server.sendmail(email_username, email_input, msg.as_string())
-            server.quit()
-
-            st.success("Token has been sent to your email. Please check your email to enter the token.")
-            st.session_state.token = token
-            st.session_state.email_sent = True
+            body = f"Your token is: {st.session_state.token}"
+            mailto_link = f"mailto:{email_input}?subject={subject}&body={body}"
+st.markdown(f"""
+<div style="background-color:#d4edda;padding:10px;border-radius:5px;color:#155724;"> A token has been generated. Please <a href="{mailto_link}" style="color:#155724;text-decoration:underline;font-weight:bold;">click here</a> to send the token to your email and check your inbox. </div> """, unsafe_allow_html=True)
         else:
-            st.error("Unauthorized email address. Please use an allowed email.")
+            st.error("Unauthorized email address. Please enter a valid authorized email address.")
 
-    # Input token only if email has been sent
-    if st.session_state.email_sent:
+    # Input token
+    if st.session_state.token:
         token_input = st.text_input("Enter your token")
 
         if st.button("Log in"):
             if token_input == st.session_state.token:
                 st.success("Logged in successfully!")
                 st.session_state.logged_in = True
-                st.session_state.token = None
-                st.session_state.email_sent = False
-                st.experimental_rerun()
+                st.session_state.token = None  # Reset token setelah login
+                st.experimental_rerun()  # Refresh halaman
             else:
                 st.error("Invalid token.")
 
-# Run the login function
+# Menjalankan fungsi login
 if not st.session_state.logged_in:
     login()
 else:
