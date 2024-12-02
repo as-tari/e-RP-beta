@@ -30,15 +30,12 @@ def logout():
 st.image("static/images/2.png")
         
 # Menampilkan logo aplikasi
-st.logo("static/images/1.png", icon_image="static/images/3.png")
+st.logo("static/images/logo2.png", icon_image="static/images/logo1.png")
 
 # Menampilkan halaman login jika belum login
 if st.session_state.role is None:
     login()
 else:
-    # Menampilkan gambar dan judul aplikasi
-    st.image("static/images/4.png")  # Menampilkan logo tambahan
-
     # Menentukan halaman berdasarkan peran
     logout_page = st.Page(logout, title="Log out", icon=":material/logout:")
     settings = st.Page("admin/settings.py", title="Settings", icon=":material/settings:")
