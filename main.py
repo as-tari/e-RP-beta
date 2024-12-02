@@ -37,7 +37,7 @@ def display_dashboard():
         st.warning("Please log in to access your dashboard.")
 
 # Login dan pemilihan role
-st.title("Selamat Datang di Sistem Bantuan e-RP!")
+st.title("📑 e-RP Assistant System")
 st.markdown("<h2 style='font-family: 'Courier New'; color: blue;'>Welcome!</h2>", unsafe_allow_html=True)
 role_input = st.selectbox("Select your role", ["Admin", "Team", "Lecturer", "Student"])
 st.session_state.role = role_input
