@@ -27,10 +27,10 @@ def logout():
     st.rerun()  # Menggunakan rerun untuk memperbarui tampilan
 
 # Menampilkan judul aplikasi
-st.image("static/images/5.png")
+st.image("static/images/2.png")
         
 # Menampilkan logo aplikasi
-st.logo("static/images/5.png", icon_image="static/images/3.png")
+st.logo("static/images/1.png", icon_image="static/images/3.png")
 
 # Menampilkan halaman login jika belum login
 if st.session_state.role is None:
