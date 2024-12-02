@@ -28,7 +28,8 @@ def login():
             st.session_state.token = generate_token()
             subject = "Your Authentication Token"
             body = f"Your token is: {st.session_state.token}"
-            mailto_link = f"mailto:{email_input}?subject={subject}&body={body}" st.markdown(f"""<div style="background-color:#d4edda;padding:10px;border-radius:5px;color:#155724;"> A token has been generated. Please <a href="{mailto_link}" style="color:#155724;text-decoration:underline;font-weight:bold;">click here</a> to send the token to your email and check your inbox. </div> """, unsafe_allow_html=True)
+            mailto_link = f"mailto:{email_input}?subject={subject}&body={body}"
+            st.markdown(f"""<div style="background-color:#d4edda;padding:10px;border-radius:5px;color:#155724;"> A token has been generated. Please <a href="{mailto_link}" style="color:#155724;text-decoration:underline;font-weight:bold;">click here</a> to send the token to your email and check your inbox. </div> """, unsafe_allow_html=True)
         else:
             st.error("Unauthorized email address. Please enter a valid authorized email address.")
 
