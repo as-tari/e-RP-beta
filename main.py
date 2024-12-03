@@ -11,16 +11,7 @@ st.set_page_config(
 )
 
 # Welcome text
-welcome = """
-Welcome to e-RP Assistant System!
-"""
-
-def stream_text():
-    for word in welcome.split(" "):
-        yield word + " "
-        time.sleep(0.02)
-
-st.write_stream(stream_text)
+st.write_stream(Welcome to e-RP Assistant System!)
 
 # Muat variabel lingkungan dari file .env
 load_dotenv()
