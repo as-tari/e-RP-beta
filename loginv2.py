@@ -1,67 +1,29 @@
 import streamlit as st
-import random
-import string
-import os
-from dotenv import load_dotenv
+import gnupg
 
-# Load environment variables from .env file
-load_dotenv()
-ALLOWED_EMAILS = os.getenv("ALLOWED_EMAILS").split(",")
+# Inisialisasi GPG
+gpg = gnupg.GPG()
 
-# Function to generate a random token
-def generate_token(length=6):
-    return ''.join(random.choices(string.ascii_letters + string.digits, k=length))
+# Upload kunci publik PGP
+st.title('Enkripsi Pesan Menggunakan PGP')
+public_key = st.text_area('Masukkan Kunci Publik Penerima', '')
 
-# Initialize session state
-if "logged_in" not in st.session_state:
-    st.session_state.logged_in = False
-if "token" not in st.session_state:
-    st.session_state.token = None
+# Teks yang ingin dienkripsi
+message = st.text_area('Masukkan Teks yang Akan Dikirim', '')
 
-# Main login function
-def login():
-    st.header("Log in")
-
-    # Input email address
-    email_input = st.text_input("Enter your email to log in")
-
-    if st.button("Request Token"):
-        if email_input in ALLOWED_EMAILS:
-            # Generate token
-            token = generate_token()
-            st.session_state.token = token  # Store the token for verification
-
-            # Create the email subject and body
-            subject = "Your Authentication Token"
-            body = f"You have requested a login token. Your token is: <strong style='color:blue;'>{token}</strong>"
-
-            # Create the mailto link
-            mailto_link = f"mailto:{email_input}?subject={subject}&body={body}"
-
-            # Display the token to the user in the application
-            st.markdown(f"<div style='background-color:#d4edda;padding:10px;border-radius:5px;color:#155724;'>Your token is: <strong style='color:blue;'>{token}</strong></div>", unsafe_allow_html=True)
-
-            # Display a clickable link for the user to send the email
-            st.markdown(f"""<div style="background-color:#d4edda;padding:10px;border-radius:5px;color:#155724;">
-                            Please <a href="{mailto_link}" style="color:#155724;text-decoration:underline;font-weight:bold;">click here</a> to send the email.
-                            </div>""", unsafe_allow_html=True)
+if st.button('Enkripsi'):
+    if public_key and message:
+        # Impor kunci publik
+        import_result = gpg.import_keys(public_key)
+        if import_result.count == 0:
+            st.error('Kunci publik tidak valid')
         else:
-            st.error("Unauthorized email address. Please enter a valid authorized email address.")
-
-    # Input token only appears after the token is generated
-    if st.session_state.token:
-        token_input = st.text_input("Enter your token")
-
-        if st.button("Log in"):
-            if token_input == st.session_state.token:
-                st.success("Logged in successfully!")
-                st.session_state.logged_in = True
-                st.session_state.token = None  # Reset token after login
+            # Enkripsi pesan
+            encrypted_message = gpg.encrypt(message, import_result.fingerprints[0])
+            if encrypted_message.ok:
+                st.subheader('Pesan yang Terenkripsi:')
+                st.text(encrypted_message)
             else:
-                st.error("Invalid token.")
-
-# Run the login function
-if not st.session_state.logged_in:
-    login()
-else:
-    st.write("Welcome to the application!")
+                st.error('Terjadi kesalahan saat enkripsi')
+    else:
+        st.error('Pastikan untuk mengisi kunci publik dan pesan.')
