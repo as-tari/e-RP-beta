@@ -4,27 +4,7 @@ from PIL import Image
 st.set_page_config(
     page_title="Log in | e-RP Assistant System",
 )
-
-# Add a colored header background using HTML and CSS
-st.markdown(
-    """
-    <style>
-    .header {
-        background-color: #4CAF50;  /* Change this to your desired color */
-        padding: 10px;               /* Add some padding */
-        color: white;                /* Text color */
-        text-align: center;          /* Center the text */
-        font-size: 24px;             /* Font size */
-    }
-    </style>
-    <div class="header">
-        Welcome to My App!
-    </div>
-    """,
-    unsafe_allow_html=True
     
-# Custom page header
-st.markdown("<h1 style='color: purple;'>Welcome to My App!</h1>", unsafe_allow_html=True)
 
 # Inisialisasi session state untuk role
 if "role" not in st.session_state:
