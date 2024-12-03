@@ -10,6 +10,9 @@ st.set_page_config(
     page_title="Log in | e-RP Assistant System"
 )
 
+st.write("Welcome to the application!")
+
+
 # Muat variabel lingkungan dari file .env
 load_dotenv()
 ALLOWED_EMAILS = os.getenv("ALLOWED_EMAILS").split(",")
