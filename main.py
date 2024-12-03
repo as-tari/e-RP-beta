@@ -10,7 +10,7 @@ st.set_page_config(
     page_title="Log in | e-RP Assistant System"
 )
 
-st.write("Welcome to the application!")
+st.write_stream("Welcome to e-RP Assistant System!")
 
 
 # Muat variabel lingkungan dari file .env
