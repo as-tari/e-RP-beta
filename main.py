@@ -5,6 +5,9 @@ st.set_page_config(
     page_title="Log in | e-RP Assistant System",
 )
 
+# Custom page header
+st.markdown("<h1 style='color: green;'>Welcome to My App!</h1>", unsafe_allow_html=True)
+
 # Inisialisasi session state untuk role
 if "role" not in st.session_state:
     st.session_state.role = None
