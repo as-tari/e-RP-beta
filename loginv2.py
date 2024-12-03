@@ -50,8 +50,9 @@ def login():
             subject = "Your Authentication Token"
             body = f"""Click the link below to retrieve your token:\n\n{token_link}"""
 
-            # Send email using the 'mailto' link (simplified version)
+            # Properly format the mailto link to include the body and subject
             mailto_link = f"mailto:{email_input}?subject={subject}&body={body}"
+
             st.markdown(f"""<div style="background-color:#d4edda;padding:10px;border-radius:5px;color:#155724;">
                             A token has been generated. Please <a href="{mailto_link}" style="color:#155724;text-decoration:underline;font-weight:bold;">click here</a> to send the token to your email and check your inbox.
                             </div>""", unsafe_allow_html=True)
