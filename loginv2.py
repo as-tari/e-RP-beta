@@ -33,15 +33,17 @@ def login():
 
             # Create the email subject and body
             subject = "Your Authentication Token"
-            body = "You have requested a login token. Please check the application for your token."
+            body = "You have requested a login token. Your token is: " + token  # Include the token in the email body
 
             # Create the mailto link
             mailto_link = f"mailto:{email_input}?subject={subject}&body={body}"
 
-            # Display a clickable link for the user
+            # Display the token to the user
+            st.markdown(f"<div style='background-color:#d4edda;padding:10px;border-radius:5px;color:#155724;'>Your token is: <strong>{token}</strong></div>", unsafe_allow_html=True)
+
+            # Display a clickable link for the user to send the email
             st.markdown(f"""<div style="background-color:#d4edda;padding:10px;border-radius:5px;color:#155724;">
-                            A token has been generated. Please <a href="{mailto_link}" style="color:#155724;text-decoration:underline;font-weight:bold;">click here</a> to send the email.
-                            You must send the email first before you can enter your token.
+                            Please <a href="{mailto_link}" style="color:#155724;text-decoration:underline;font-weight:bold;">click here</a> to send the email.
                             </div>""", unsafe_allow_html=True)
         else:
             st.error("Unauthorized email address. Please enter a valid authorized email address.")
