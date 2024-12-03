@@ -1,7 +1,6 @@
 import streamlit as st
 import random
 import string
-import base64
 import os
 from dotenv import load_dotenv
 
@@ -12,14 +11,6 @@ ALLOWED_EMAILS = os.getenv("ALLOWED_EMAILS").split(",")
 # Function to generate a random token
 def generate_token(length=6):
     return ''.join(random.choices(string.ascii_letters + string.digits, k=length))
-
-# Function to encode token to Base64 (optional if needed for security)
-def encode_token(token):
-    return base64.b64encode(token.encode()).decode()
-
-# Function to decode Base64 token
-def decode_token(encoded_token):
-    return base64.b64decode(encoded_token.encode()).decode()
 
 # Initialize session state
 if "logged_in" not in st.session_state:
@@ -38,7 +29,7 @@ def login():
         if email_input in ALLOWED_EMAILS:
             # Generate token
             token = generate_token()
-            st.session_state.token = token
+            st.session_state.token = token  # Store the token for verification
 
             # Create the email subject and body
             subject = "Your Authentication Token"
