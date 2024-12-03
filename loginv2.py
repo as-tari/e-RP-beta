@@ -13,7 +13,7 @@ ALLOWED_EMAILS = os.getenv("ALLOWED_EMAILS").split(",")
 def generate_token(length=6):
     return ''.join(random.choices(string.ascii_letters + string.digits, k=length))
 
-# Fungsi untuk meng-encode token ke Base64
+# Fungsi untuk meng-encode token ke Base64 (optional if needed for security)
 def encode_token(token):
     return base64.b64encode(token.encode()).decode()
 
@@ -40,7 +40,7 @@ def login():
             token = generate_token()
             st.session_state.token = token
 
-            # Encode token in Base64
+            # Encode token in Base64 (optional)
             encoded_token = encode_token(token)
 
             # Create the email subject and body
@@ -51,10 +51,10 @@ Your authentication token is: <span style="display:none;">{token}</span>
 
 Please enter this token to log in. It will be revealed when you check the email in your inbox."""
 
-            # Properly format the mailto link to include the body and subject
+            # Create the mailto link
             mailto_link = f"mailto:{email_input}?subject={subject}&body={body}"
 
-            # Display the link to trigger the email
+            # Display a clickable link for the user
             st.markdown(f"""<div style="background-color:#d4edda;padding:10px;border-radius:5px;color:#155724;">
                             A token has been generated. Please <a href="{mailto_link}" style="color:#155724;text-decoration:underline;font-weight:bold;">click here</a> to send the token to your email and check your inbox.
                             </div>""", unsafe_allow_html=True)
