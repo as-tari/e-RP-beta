@@ -36,7 +36,6 @@ def logout():
 image = Image.open('static/images/logo.png')
 st.image(image, caption=None, width=50, use_column_width=False, clamp=False, channels="RGB", output_format="auto")
 st.logo("static/images/logo1.png", icon_image="static/images/logo1.png")
-st.markdown("Read more: [Open access, peer-reviewed paper](https://doi.org/10.3758/s13428-023-02124-2), [Cambridge](https://www.cam.ac.uk/stories/mist), [YouGov](https://today.yougov.com/politics/articles/45855-americans-distinguish-real-fake-news-headline-poll), [Forbes](https://www.forbes.com/sites/conormurray/2023/06/28/gen-z-and-millennials-more-likely-to-fall-for-fake-news-than-older-people-test-finds/amp/), [NiemanLab](https://www.niemanlab.org/2023/07/how-a-new-two-minute-quiz-measures-misinformation-susceptibility/), [another study](https://www.cambridge.org/core/journals/judgment-and-decision-making/article/susceptibility-to-misinformation-is-consistent-across-question-framings-and-response-modes-and-better-explained-by-myside-bias-and-partisanship-than-analytical-thinking/1121D46E918815B2CD7A9C6C237464A2)")
 
 # Menampilkan halaman login jika belum login
 if st.session_state.role is None:
