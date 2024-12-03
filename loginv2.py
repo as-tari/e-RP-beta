@@ -17,6 +17,10 @@ def generate_token(length=6):
 def encode_token(token):
     return base64.b64encode(token.encode()).decode()
 
+# Fungsi untuk mendekode Base64 token
+def decode_token(encoded_token):
+    return base64.b64decode(encoded_token.encode()).decode()
+
 # Inisialisasi session state
 if "logged_in" not in st.session_state:
     st.session_state.logged_in = False
@@ -42,13 +46,15 @@ def login():
             # Generate unique URL with the encoded token
             token_link = f"https://your-app.com/retrieve-token?token={encoded_token}"
 
-            # Email body with the link
+            # Send email with the token link
             subject = "Your Authentication Token"
-            body = f"Click the link below to retrieve your token:\n\n{token_link}"
+            body = f"""Click the link below to retrieve your token:\n\n{token_link}"""
 
-            # Send email using the 'mailto' link
+            # Send email using the 'mailto' link (simplified version)
             mailto_link = f"mailto:{email_input}?subject={subject}&body={body}"
-            st.markdown(f"""<div style="background-color:#d4edda;padding:10px;border-radius:5px;color:#155724;">A token has been generated. Please <a href="{mailto_link}" style="color:#155724;text-decoration:underline;font-weight:bold;">click here</a> to send the token to your email and check your inbox.</div>""", unsafe_allow_html=True)
+            st.markdown(f"""<div style="background-color:#d4edda;padding:10px;border-radius:5px;color:#155724;">
+                            A token has been generated. Please <a href="{mailto_link}" style="color:#155724;text-decoration:underline;font-weight:bold;">click here</a> to send the token to your email and check your inbox.
+                            </div>""", unsafe_allow_html=True)
         else:
             st.error("Unauthorized email address. Please enter a valid authorized email address.")
 
