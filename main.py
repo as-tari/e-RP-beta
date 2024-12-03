@@ -33,7 +33,7 @@ def logout():
 
 # Menampilkan logo aplikasi
 image = Image.open('static/images/logo.png')
-st.image(image, caption=None, width=200, use_column_width=False, clamp=False, channels="RGB", output_format="auto")
+st.image(image, caption=None, width=50, use_column_width=False, clamp=False, channels="RGB", output_format="auto")
 st.logo("static/images/logo1.png", icon_image="static/images/logo1.png")
 
 # Menampilkan halaman login jika belum login
