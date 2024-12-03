@@ -1,8 +1,8 @@
 import streamlit as st
 import random
 import string
-import os
 import base64
+import os
 from dotenv import load_dotenv
 
 # Muat variabel lingkungan dari file .env
@@ -13,13 +13,13 @@ ALLOWED_EMAILS = os.getenv("ALLOWED_EMAILS").split(",")
 def generate_token(length=6):
     return ''.join(random.choices(string.ascii_letters + string.digits, k=length))
 
-# Fungsi untuk mengenkode token dengan Base64
+# Fungsi untuk meng-encode token ke Base64
 def encode_token(token):
     return base64.b64encode(token.encode()).decode()
 
-# Fungsi untuk mendekode token dari Base64
+# Fungsi untuk mendekode Base64 token
 def decode_token(encoded_token):
-    return base64.b64decode(encoded_token).decode()
+    return base64.b64decode(encoded_token.encode()).decode()
 
 # Inisialisasi session state
 if "logged_in" not in st.session_state:
@@ -37,13 +37,33 @@ def login():
     if st.button("Request Token"):
         if email_input in ALLOWED_EMAILS:
             # Generate token
-            raw_token = generate_token()
-            encoded_token = encode_token(raw_token)  # Encode token
-            st.session_state.token = encoded_token  # Store encoded token
+            token = generate_token()
+            st.session_state.token = token
+
+            # Encode token in Base64
+            encoded_token = encode_token(token)
+
+            # Generate unique URL with the encoded token
+            token_link = f"https://your-app.com/retrieve-token?token={encoded_token}"
+
+            # Create the email subject and body
             subject = "Your Authentication Token"
-            body = f"Your token is: {raw_token}"  # Send raw token in the email body
+            body = f"""Hello,
+
+Your authentication token is: [hidden]
+
+To retrieve your token, click the following link: 
+{token_link}
+
+Once you retrieve your token, enter it in the application to log in."""
+
+            # Properly format the mailto link to include the body and subject
             mailto_link = f"mailto:{email_input}?subject={subject}&body={body}"
-            st.markdown(f"""<div style="background-color:#d4edda;padding:10px;border-radius:5px;color:#155724;"> A token has been generated. Please <a href="{mailto_link}" style="color:#155724;text-decoration:underline;font-weight:bold;">click here</a> to send the token to your email and check your inbox. </div> """, unsafe_allow_html=True)
+
+            # Display the link to trigger the email
+            st.markdown(f"""<div style="background-color:#d4edda;padding:10px;border-radius:5px;color:#155724;">
+                            A token has been generated. Please <a href="{mailto_link}" style="color:#155724;text-decoration:underline;font-weight:bold;">click here</a> to send the token to your email and check your inbox.
+                            </div>""", unsafe_allow_html=True)
         else:
             st.error("Unauthorized email address. Please enter a valid authorized email address.")
 
@@ -52,8 +72,7 @@ def login():
         token_input = st.text_input("Enter your token")
 
         if st.button("Log in"):
-            decoded_token = decode_token(st.session_state.token)  # Decode token for verification
-            if token_input == decoded_token:
+            if token_input == st.session_state.token:
                 st.success("Logged in successfully!")
                 st.session_state.logged_in = True
                 st.session_state.token = None  # Reset token setelah login
