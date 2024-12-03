@@ -20,8 +20,7 @@ def stream_text():
         yield word + " "
         time.sleep(0.02)
 
-if login():
-    st.write_stream(stream_text)
+st.write_stream(stream_text)
 
 # Muat variabel lingkungan dari file .env
 load_dotenv()
