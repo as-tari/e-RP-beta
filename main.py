@@ -33,8 +33,6 @@ def logout():
 
 # Menampilkan logo aplikasi
 image = Image.open('static/images/logo2.png')
-st.image(image, caption=None, output_format="PNG")
-
 st.image(image, caption=None, width=None, use_column_width=None, clamp=False, channels="RGB", output_format="auto", *, use_container_width=False)
 
 st.logo("static/images/logo1.png", icon_image="static/images/logo1.png")
