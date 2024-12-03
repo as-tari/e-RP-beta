@@ -11,7 +11,7 @@ st.set_page_config(
 )
 
 # Welcome text
-st.write_stream(Welcome to e-RP Assistant System!)
+st.write_stream("Welcome to e-RP Assistant System!")
 
 # Muat variabel lingkungan dari file .env
 load_dotenv()
