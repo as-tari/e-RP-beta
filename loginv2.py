@@ -33,12 +33,12 @@ def login():
 
             # Create the email subject and body
             subject = "Your Authentication Token"
-            body = f"""You have requested a login token. Your token is: <strong style="color:blue;">{token}</strong>"""  # HTML formatted token
+            body = f"You have requested a login token. Your token is: <strong style='color:blue;'>{token}</strong>"
 
             # Create the mailto link
             mailto_link = f"mailto:{email_input}?subject={subject}&body={body}"
 
-            # Display the token to the user with HTML formatting
+            # Display the token to the user in the application
             st.markdown(f"<div style='background-color:#d4edda;padding:10px;border-radius:5px;color:#155724;'>Your token is: <strong style='color:blue;'>{token}</strong></div>", unsafe_allow_html=True)
 
             # Display a clickable link for the user to send the email
