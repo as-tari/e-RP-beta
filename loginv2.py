@@ -79,34 +79,25 @@ def select_role():
             st.success(f"You are logged in as {role}.")
             st.experimental_rerun()  # Refresh the app to show the appropriate dashboard
 
-# Function to log out
-def logout():
-    st.session_state.logged_in = False
-    st.session_state.token = None
-    st.session_state.role = None
-    st.experimental_rerun()  # Refresh the app to show the login page
-
 # Function to display the application based on role
 def display_app():
     st.write("Welcome to the application!")
-
-    # Display logo
-    image = Image.open('static/images/logo.png')
-    st.image(image, caption=None, width=50, use_column_width=False, clamp=False, channels="RGB", output_format="auto")
-
-    # Log out and settings pages
-    logout_page = st.button("Log out", on_click=logout)
-    settings = st.button("Settings")
-
-    # Admin
+    # Here you can add the logic to display different dashboards based on the role
     if st.session_state.role[0] == "Admin":
         st.write("Admin Dashboard")
         # Add admin dashboard logic here
-        if st.button("Manage Users"):
-            st.write("Manage Users Page")
-            # Add manage users logic here
-
-    # Team
-    if st.session_state.role[0] == "Team":
+    elif st.session_state.role[0] == "Team":
         st.write(f"{st.session_state.role[1]} Dashboard")
         # Add team dashboard logic here
+    elif st.session_state.role[0] == "Lecturer":
+        st.write("Lecturer Dashboard")
+        # Add lecturer dashboard logic here
+    elif st.session_state.role[0] == "Student":
+        st.write("Student Dashboard")
+        # Add student dashboard logic here
+
+# Display the login form or the application based on login state
+if not st.session_state.logged_in:
+    login()
+else:
+    display_app()
