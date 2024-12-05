@@ -94,44 +94,19 @@ def display_app():
     image = Image.open('static/images/logo.png')
     st.image(image, caption=None, width=50, use_column_width=False, clamp=False, channels="RGB", output_format="auto")
 
-    # Log out
-    logout_page = st.Page(logout, title="Log out", icon=":material/logout:")
-    settings = st.Page("admin/settings.py", title="Settings", icon=":material/settings:")
-    
+    # Log out and settings pages
+    logout_page = st.button("Log out", on_click=logout)
+    settings = st.button("Settings")
+
     # Admin
     if st.session_state.role[0] == "Admin":
-        admin_dashboard = st.Page("admin/dashboard.py", title="Admin Dashboard", icon=":material/person_add:")
-        manage_users = st.Page("admin/manage_users.py", title="Manage Users", icon=":material/security:")
-    
+        st.write("Admin Dashboard")
+        # Add admin dashboard logic here
+        if st.button("Manage Users"):
+            st.write("Manage Users Page")
+            # Add manage users logic here
+
     # Team
     if st.session_state.role[0] == "Team":
-        team_dashboard = st.Page(f"team/{st.session_state.role[1].lower()}.py", title=f"{st.session_state.role[1]} Dashboard", icon=":material/group:")
-    
-    # Lecturer
-    if st.session_state.role[0] == "Lecturer":
-        lecturer_dashboard = st.Page("lecturer/dashboard.py", title="Lecturer Dashboard", icon=":material/teacher:")
-    
-    # Student
-    if st.session_state.role[0] == "Student":
-        student_dashboard = st.Page("student/dashboard.py", title="Student Dashboard", icon=":material/student:")
-
-    # Menyusun halaman berdasarkan peran
-    account_pages = [logout_page, settings]
-    page_dict = {}
-
-    if st.session_state.role[0] == "Admin":
-        page_dict["Admin"] = [admin_dashboard, manage_users]
-    if st.session_state.role[0] == "Team":
-        page_dict["Team"] = [team_dashboard]
-    if st.session_state.role[0] == "Lecturer":
-        page_dict["Lecturer"] = [lecturer_dashboard]
-    if st.session_state.role[0] == "Student":
-        page_dict["Student"] = [student_dashboard]
-
-    # Menampilkan navigasi
-    if len(page_dict) > 0:
-        pg = st.navigation({"Account": account_pages} | page_dict)
-    else:
-        pg = st.navigation([st.Page(login)])
-
-    pg.run()
+        st.write(f"{st.session_state.role[1]} Dashboard")
+        # Add team dashboard logic here
