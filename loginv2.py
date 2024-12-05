@@ -72,12 +72,21 @@ def select_role():
         if st.button("Confirm Role"):
             st.session_state.role = (role, team_role)
             st.success(f"You are logged in as {role} - {team_role}.")
-            st.experimental_rerun()  # Refresh the app to show the appropriate dashboard
+            redirect_to_dashboard(role, team_role)  # Redirect to the appropriate dashboard
     else:
         if st.button("Confirm Role"):
             st.session_state.role = (role, None)
             st.success(f"You are logged in as {role}.")
-            st.experimental_rerun()  # Refresh the app to show the appropriate dashboard
+            redirect_to_dashboard(role)  # Redirect to the appropriate dashboard
+
+# Function to redirect to the appropriate dashboard
+def redirect_to_dashboard(role, team_role=None):
+    if role == "Team":
+        st.experimental_set_query_params(role=role, team_role=team_role)
+        st.experimental_rerun()  # Refresh the app to show the appropriate dashboard
+    else:
+        st.experimental_set_query_params(role=role)
+        st.experimental_rerun()  # Refresh the app to show the appropriate dashboard
 
 # Function to display the application based on role
 def display_app():
@@ -92,7 +101,7 @@ def display_app():
     elif st.session_state.role[0] == "Lecturer":
         st.write("Lecturer Dashboard")
         # Add lecturer dashboard logic here
-    elif st.session_state.role[0] == "Student":
+    elif st.session_state.role [0] == "Student":
         st.write("Student Dashboard")
         # Add student dashboard logic here
 
