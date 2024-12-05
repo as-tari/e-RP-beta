@@ -79,74 +79,39 @@ def select_role():
             st.success(f"You are logged in as {role}.")
             st.experimental_rerun()  # Refresh the app to show the appropriate dashboard
 
+# Function to log out
+def logout():
+    st.session_state.logged_in = False
+    st.session_state.token = None
+    st.session_state.role = None
+    st.experimental_rerun()  # Refresh the app to show the login page
+
 # Function to display the application based on role
 def display_app():
     st.write("Welcome to the application!")
-    # Here you can add the logic to display different dashboards based on the role
-    if st.session_state.role[0] == "Admin":
-        st.write("Admin Dashboard")
-        # Add admin dashboard logic here
-    elif st.session_state.role[0] == "Team":
-        st.write(f"{st.session_state.role[1]} Dashboard")
-        # Add team dashboard logic here
-    elif st.session_state.role[0] == "Lecturer":
-        st.write("Lecturer Dashboard")
-        # Add lecturer dashboard logic here
-    elif st.session_state.role[0] == "Student":
-        st.write("Student Dashboard")
-        # Add student dashboard logic here
 
-# Display the login form or the application based on login state
-if not st.session_state.logged_in:
-    login()
-else:
-    display_app()
+    # Display logo
+    image = Image.open('static/images/logo.png')
+    st.image(image, caption=None, width=50, use_column_width=False, clamp=False, channels="RGB", output_format="auto")
 
-def login():
-    st.header("Log in")
-    role = st.selectbox("Choose your role", ROLES)
-
-    if role == "Team":
-        team_role = st.selectbox("Choose your team role", TEAM_ROLES)
-        if st.button("Log in"):
-            st.session_state.role = (role, team_role)
-            st.rerun()  # Menggunakan rerun untuk memperbarui tampilan
-    else:
-        if st.button("Log in"):
-            st.session_state.role = (role, None)
-            st.rerun()  # Menggunakan rerun untuk memperbarui tampilan
-
-def logout():
-    st.session_state.role = None
-    st.rerun()  # Menggunakan rerun untuk memperbarui tampilan
-
-# Menampilkan logo aplikasi
-image = Image.open('static/images/logo.png')
-st.image(image, caption=None, width=50, use_column_width=False, clamp=False, channels="RGB", output_format="auto")
-st.logo("static/images/logo1.png", icon_image="static/images/logo1.png")
-
-# Menampilkan halaman login jika belum login
-if st.session_state.role is None:
-    login()
-else:
-    # Menentukan halaman berdasarkan peran
+    # Log out
     logout_page = st.Page(logout, title="Log out", icon=":material/logout:")
     settings = st.Page("admin/settings.py", title="Settings", icon=":material/settings:")
     
-    # Halaman untuk Admin
+    # Admin
     if st.session_state.role[0] == "Admin":
         admin_dashboard = st.Page("admin/dashboard.py", title="Admin Dashboard", icon=":material/person_add:")
         manage_users = st.Page("admin/manage_users.py", title="Manage Users", icon=":material/security:")
     
-    # Halaman untuk Team
+    # Team
     if st.session_state.role[0] == "Team":
         team_dashboard = st.Page(f"team/{st.session_state.role[1].lower()}.py", title=f"{st.session_state.role[1]} Dashboard", icon=":material/group:")
     
-    # Halaman untuk Lecturer
+    # Lecturer
     if st.session_state.role[0] == "Lecturer":
         lecturer_dashboard = st.Page("lecturer/dashboard.py", title="Lecturer Dashboard", icon=":material/teacher:")
     
-    # Halaman untuk Student
+    # Student
     if st.session_state.role[0] == "Student":
         student_dashboard = st.Page("student/dashboard.py", title="Student Dashboard", icon=":material/student:")
 
